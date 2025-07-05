@@ -10,7 +10,7 @@ class InMemoryUserRepository  implements UserPrismaRepository {
         this.user = [
             {
                 id: '8a7404ac-5c4a-4bf5-b7b8-d4f7488df10b',
-                name: 'user',
+                name: 'user1',
                 email: 'user@gmail.com',
                 password: '12345648'
             }
@@ -18,15 +18,6 @@ class InMemoryUserRepository  implements UserPrismaRepository {
     }
 
     
-    update(id: string, data: User): Promise<User> {
-        throw new Error("Method not implemented.");
-    }
-    
-    
-    delete(id: string): Promise<string> {
-        throw new Error("Method not implemented.");
-    }
-
 
     async getAll(): Promise<User[]>  {
         return this.user;
@@ -42,6 +33,7 @@ class InMemoryUserRepository  implements UserPrismaRepository {
 
         return dataUser;
     }
+
 
     async getByEmail(email: string): Promise<User | null> {
         const dataUser = this.user.find((item) => item.email === email);
@@ -60,15 +52,17 @@ class InMemoryUserRepository  implements UserPrismaRepository {
     }
     
 
-    async updata(id: string, data: User): Promise<User> {
+    async update(id: string, data: User): Promise<User> {
         const index = this.user.findIndex((item) => item.id === id);
+    
+        data.id = this.user[index].id;
         this.user[index] = data;
-        return data;
+
+        return this.user[index];
     }
 
-    async dalete(id: string): Promise<string> {
+    async delete(id: string): Promise<string> {
         const index = this.user.findIndex((item) => item.id === id);
-
         delete this.user[index];
 
         return id;

@@ -31,15 +31,12 @@ class UserPrismaRepository {
 
     async update(id: string, data: User): Promise<User> {
         const updateUser = await prisma.user.update({
-            data: {
-                name: 'user'
-            },
+            data,
             where: {
-                id: '86a377cd-27b5-41e2-8403-8ba4d2b74d5f'
+                id
             }
         })
-
-        console.log(updateUser);
+    
         return updateUser;
     }
 
@@ -66,14 +63,15 @@ class UserPrismaRepository {
     async delete(id: string): Promise<string> {
         const deletedUser = await prisma.user.delete({
             where: {
-                id: '86a377cd-27b5-41e2-8403-8ba4d2b74d5f'
+                id
             }
         })
 
-        console.log(deletedUser);
-        return id;
+        return deletedUser.id
+
     }
 
 }
 
 export default UserPrismaRepository;
+

@@ -37,7 +37,33 @@ class UserService {
 
         return  { data: addUserData }
     }
+
+    async update(id: string, data: User): Promise<User> {
+        const userData = await this.userRepository.getById(id);
+
+        if(!userData) {
+            throw new Error('Usuario não encontrado!');
+        }
+
+        const updatedUser = await this.userRepository.update(id, data);
+        return updatedUser;
+    }
+
+
+    async delete(id: string): Promise<{id: string}>{
+        const userData = await this.userRepository.getById(id);
+
+        if(!userData) {
+            throw new Error('Usuario não encontrado!');
+        }
+
+        const deletedUserId = await this.userRepository.delete(id);
+
+        return {id: deletedUserId}
+    }
+
 }
+
 
 
 export default UserService;
