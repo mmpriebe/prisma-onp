@@ -59,13 +59,11 @@ class UserController {
     async update(Req: Request, Res: Response){
         try {
         
-
-
             const data = Req.body;
             const { id } = Req.params;
 
             
-            if(!data.name || !data.email || !data.password || !data.id) {
+            if(!data.name || !data.email || !data.password || !id) {
                 throw new Error('Por favor, envie todos os dados obrigatórios!');
             }
 
@@ -74,7 +72,8 @@ class UserController {
             }
 
             const updatedUser = await userService.update(id, data);
-    
+            
+            Res.json(updatedUser);
 
 
         } catch (err: any) {
@@ -86,6 +85,16 @@ class UserController {
     async delete(Req: Request, Res: Response){
         try {
         
+            const { id } = Req.params;
+
+            if(!id) {
+                throw new Error('Bad Request id');
+            }
+
+            const userDeleted = await userService.delete(id);
+            
+            Res.json(userDeleted);
+
         } catch (err: any) {
             Res.status(400).json({error: err.message})    
         }

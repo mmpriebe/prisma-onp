@@ -10,7 +10,7 @@ class InMemoryUserRepository  implements UserPrismaRepository {
         this.user = [
             {
                 id: '8a7404ac-5c4a-4bf5-b7b8-d4f7488df10b',
-                name: 'user',
+                name: 'user1',
                 email: 'user@gmail.com',
                 password: '12345648'
             }
@@ -54,13 +54,15 @@ class InMemoryUserRepository  implements UserPrismaRepository {
 
     async update(id: string, data: User): Promise<User> {
         const index = this.user.findIndex((item) => item.id === id);
+    
+        data.id = this.user[index].id;
         this.user[index] = data;
-        return data;
+
+        return this.user[index];
     }
 
     async delete(id: string): Promise<string> {
         const index = this.user.findIndex((item) => item.id === id);
-
         delete this.user[index];
 
         return id;

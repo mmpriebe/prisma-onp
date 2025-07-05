@@ -49,6 +49,19 @@ class UserService {
         return updatedUser;
     }
 
+
+    async delete(id: string): Promise<{id: string}>{
+        const userData = await this.userRepository.getById(id);
+
+        if(!userData) {
+            throw new Error('Usuario não encontrado!');
+        }
+
+        const deletedUserId = await this.userRepository.delete(id);
+
+        return {id: deletedUserId}
+    }
+
 }
 
 
