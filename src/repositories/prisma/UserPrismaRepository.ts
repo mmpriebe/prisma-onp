@@ -31,15 +31,12 @@ class UserPrismaRepository {
 
     async update(id: string, data: User): Promise<User> {
         const updateUser = await prisma.user.update({
-            data: {
-                name: 'user'
-            },
+            data,
             where: {
-                id: '86a377cd-27b5-41e2-8403-8ba4d2b74d5f'
+                id
             }
         })
-
-        console.log(updateUser);
+    
         return updateUser;
     }
 

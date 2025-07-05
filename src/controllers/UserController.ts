@@ -42,9 +42,9 @@ class UserController {
 
             const data = Req.body;
 
-            if(!data.name || !data.email || !data.password) {
-                throw new Error('Por favor, envie todos os dados obrigatórios!');
-            }
+                if(!data.name || !data.email || !data.password) {
+                    throw new Error('Por favor, envie todos os dados obrigatórios!');
+                }
 
             const userCreatedData = await userService.create(data);
 
@@ -59,6 +59,24 @@ class UserController {
     async update(Req: Request, Res: Response){
         try {
         
+
+
+            const data = Req.body;
+            const { id } = Req.params;
+
+            
+            if(!data.name || !data.email || !data.password || !data.id) {
+                throw new Error('Por favor, envie todos os dados obrigatórios!');
+            }
+
+            if(!id) {
+                throw new Error('Bad request')
+            }
+
+            const updatedUser = await userService.update(id, data);
+    
+
+
         } catch (err: any) {
             Res.status(400).json({error: err.message})    
         }
